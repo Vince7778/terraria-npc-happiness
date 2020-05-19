@@ -25,10 +25,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
-                <div class="border rounded-lg p-2 w-100" id="tool">
+            <div class="col md-6">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="biomeDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Add Biomes
+                    </button>
+                    <div class="dropdown-menu" id="biomeDropdownMenu" aria-labelledby="biomeDropdownButton">
+                        <button class="dropdown-item" type="button" onclick="addAll()">Add one of each</button>
+                        <div class="dropdown-divider"></div>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="row" id="tool">
         </div>
     </div>
 

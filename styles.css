@@ -1,8 +1,10 @@
-.bg-hallow {
+.hallow,
+.btn-hallow,
+.btn-hallow:hover,
+.btn-hallow:active,
+.btn-hallow:visited,
+.btn-hallow:focus {
     background-color: #FFC9DE;
-}
-
-.text-hallow {
     color: #BA2B86;
 }
 
@@ -10,14 +12,30 @@
     border-color: #BA2B86 !important;
 }
 
-.bg-forest {
+.forest,
+.btn-forest,
+.btn-forest:hover,
+.btn-forest:active,
+.btn-forest:visited,
+.btn-forest:focus {
     background-color: #7FE99C;
-}
-
-.text-forest {
     color: #00610E;
 }
 
 .border-forest {
     border-color: #00610E !important;
+}
+
+.underground,
+.btn-underground,
+.btn-underground:hover,
+.btn-underground:active,
+.btn-underground:visited,
+.btn-underground:focus {
+    background-color: #D0D0D0;
+    color: #303030;
+}
+
+.border-underground {
+    border-color: #303030 !important;
 }

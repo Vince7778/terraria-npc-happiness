@@ -1,29 +1,16 @@
 
+const biomeList = ["forest", "hallow", "underground"];
+
 const biomeProps = {
     forest: {
-        colors: {
-            border: "forest",
-            text: "forest",
-            bg: "forest",
-        },
         name: "Forest",
         order: 1,
     },
     hallow: {
-        colors: {
-            border: "hallow",
-            text: "hallow",
-            bg: "hallow",
-        },
         name: "Hallow",
         order: 2,
     },
     underground: {
-        colors: {
-            border: "secondary",
-            text: "white",
-            bg: "secondary",
-        },
         name: "Underground",
         order: 3,
     },
@@ -31,10 +18,10 @@ const biomeProps = {
 
 class Biome extends React.Component {
     render() {
-        const biomeProp = biomeProps[this.props.biomeType];
+        const biomeType = this.props.biomeType;
+        const biomeProp = biomeProps[biomeType];
 
-        const colorType = biomeProp.colors;
-        let divClass = "p-3 rounded-lg bg-"+colorType.bg+" text-"+colorType.text+" border border-"+colorType.border;
+        let divClass = "row mx-0 p-3 rounded-lg " + biomeType + " border border-"+biomeType;
         if (this.props.needsMargin) divClass += " mt-2";
 
         const biomeName = biomeProp.name;
@@ -79,13 +66,32 @@ class Tool extends React.Component {
         });
 
         return (
-            <div>{biomeList}</div>
+            <div class="col m-3 p-2 border rounded-lg">{biomeList}</div>
         );
     }
 }
 
 const tool = ReactDOM.render(<Tool />, document.getElementById("tool"));
-tool.addBiome("underground");
-tool.addBiome("underground");
-tool.addBiome("hallow");
-tool.addBiome("forest");
+
+const biomeDropdown = document.getElementById("biomeDropdownMenu");
+biomeList.forEach(biomeName => {
+    const biomeProp = biomeProps[biomeName];
+
+    const className = "dropdown-item btn-"+biomeName;
+
+    const elem = document.createElement("button");
+    elem.innerHTML = biomeProp.name;
+    elem.type = "button";
+    elem.className = className;
+    elem.onclick = () => {
+        tool.addBiome(biomeName);
+    }
+
+    biomeDropdown.appendChild(elem);
+});
+
+function addAll() {
+    biomeList.forEach(biomeName => {
+        tool.addBiome(biomeName);
+    });
+}
