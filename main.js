@@ -1,12 +1,31 @@
 
 const biomeProps = {
+    forest: {
+        colors: {
+            border: "forest",
+            text: "forest",
+            bg: "forest",
+        },
+        name: "Forest",
+        order: 1,
+    },
+    hallow: {
+        colors: {
+            border: "hallow",
+            text: "hallow",
+            bg: "hallow",
+        },
+        name: "Hallow",
+        order: 2,
+    },
     underground: {
         colors: {
-            border: "dark",
+            border: "secondary",
             text: "white",
             bg: "secondary",
         },
         name: "Underground",
+        order: 3,
     },
 }
 
@@ -37,11 +56,16 @@ class Tool extends React.Component {
 
     addBiome(type) {
         const biomes = this.state.biomes;
+        const biomesConcat = biomes.concat({
+            type: type,
+        });
+
+        biomesConcat.sort((a, b) => {
+            return (biomeProps[a.type].order - biomeProps[b.type].order);
+        })
 
         this.setState({
-            biomes: biomes.concat({
-                type: type,
-            })
+            biomes: biomesConcat,
         });
     }
 
@@ -63,3 +87,5 @@ class Tool extends React.Component {
 const tool = ReactDOM.render(<Tool />, document.getElementById("tool"));
 tool.addBiome("underground");
 tool.addBiome("underground");
+tool.addBiome("hallow");
+tool.addBiome("forest");

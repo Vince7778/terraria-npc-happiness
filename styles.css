@@ -1,0 +1,23 @@
+.bg-hallow {
+    background-color: #FFC9DE;
+}
+
+.text-hallow {
+    color: #BA2B86;
+}
+
+.border-hallow {
+    border-color: #BA2B86 !important;
+}
+
+.bg-forest {
+    background-color: #7FE99C;
+}
+
+.text-forest {
+    color: #00610E;
+}
+
+.border-forest {
+    border-color: #00610E !important;
+}
