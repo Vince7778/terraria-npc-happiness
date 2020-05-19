@@ -12,12 +12,22 @@
 </head>
 
 <body>
-    <div class="container-fluid m-3">
+    <div class="container-fluid p-3">
         <div class="row">
-            <h1>Terraria Happiness Calculator</h1>
+            <div class="col">
+                <h1>Terraria Happiness Calculator</h1>
+            </div>
         </div>
         <div class="row">
-            <p>Terraria v1.4.0.1 introduced a new mechanic to NPCs that changes their prices based on their biome and neighbors. Finding a good layout that improves prices is time-consuming, so I made this tool to help.</p>
+            <div class="col">
+                <p>Terraria v1.4.0.1 introduced a new mechanic to NPCs that changes their prices based on their biome and neighbors. Finding a good layout that improves prices is time-consuming, so I made this tool to help.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="border rounded-lg p-1 w-100" id="tool">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -27,6 +37,7 @@
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="main.js" type="text/babel"></script>
 </body>
 
 </html>
