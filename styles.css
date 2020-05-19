@@ -13,11 +13,11 @@
 .btn-hallow:visited,
 .btn-hallow:focus {
     background-color: #FFC9DE;
-    color: #BA2B86;
+    color: #4A1135;
 }
 
 .border-hallow {
-    border-color: #BA2B86 !important;
+    border-color: #4A1135 !important;
 }
 
 .forest,
@@ -26,12 +26,12 @@
 .btn-forest:active,
 .btn-forest:visited,
 .btn-forest:focus {
-    background-color: #7FE99C;
-    color: #00610E;
+    background-color: #A8F0BB;
+    color: #003308;
 }
 
 .border-forest {
-    border-color: #00610E !important;
+    border-color: #003308 !important;
 }
 
 .underground,
@@ -46,4 +46,74 @@
 
 .border-underground {
     border-color: #303030 !important;
+}
+
+.desert,
+.btn-desert,
+.btn-desert:hover,
+.btn-desert:active,
+.btn-desert:visited,
+.btn-desert:focus {
+    background-color: #FFF38A;
+    color: #532E18;
+}
+
+.border-desert {
+    border-color: #532E18 !important;
+}
+
+.jungle,
+.btn-jungle,
+.btn-jungle:hover,
+.btn-jungle:active,
+.btn-jungle:visited,
+.btn-jungle:focus {
+    background-color: #66911D;
+    color: #FFFFFF;
+}
+
+.border-jungle {
+    border-color: #234511 !important;
+}
+
+.ocean,
+.btn-ocean,
+.btn-ocean:hover,
+.btn-ocean:active,
+.btn-ocean:visited,
+.btn-ocean:focus {
+    background-color: #AEF3F4;
+    color: #0F2C7B;
+}
+
+.border-ocean {
+    border-color: #0F2C7B !important;
+}
+
+.snow,
+.btn-snow,
+.btn-snow:hover,
+.btn-snow:active,
+.btn-snow:visited,
+.btn-snow:focus {
+    background-color: #EDEDED;
+    color: #003D3D;
+}
+
+.border-snow {
+    border-color: #003D3D !important;
+}
+
+.mushroom,
+.btn-mushroom,
+.btn-mushroom:hover,
+.btn-mushroom:active,
+.btn-mushroom:visited,
+.btn-mushroom:focus {
+    background-color: #4C1CC7;
+    color: #FFFFFF;
+}
+
+.border-mushroom {
+    border-color: #000000 !important;
 }

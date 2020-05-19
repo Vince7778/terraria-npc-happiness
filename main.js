@@ -1,5 +1,5 @@
 
-const biomeList = ["forest", "hallow", "underground"];
+const biomeList = ["forest", "hallow", "underground", "desert", "jungle", "ocean", "snow", "mushroom"];
 
 const biomeProps = {
     forest: {
@@ -14,6 +14,26 @@ const biomeProps = {
         name: "Underground",
         order: 3,
     },
+    desert: {
+        name: "Desert",
+        order: 4,
+    },
+    jungle: {
+        name: "Jungle",
+        order: 5,
+    },
+    ocean: {
+        name: "Ocean",
+        order: 6,
+    },
+    snow: {
+        name: "Snow",
+        order: 7,
+    },
+    mushroom: {
+        name: "Glowing Mushroom",
+        order: 8,
+    },
 }
 
 class Biome extends React.Component {
@@ -21,7 +41,7 @@ class Biome extends React.Component {
         const biomeType = this.props.biomeType;
         const biomeProp = biomeProps[biomeType];
 
-        let divClass = "row mx-0 p-3 rounded-lg " + biomeType + " border border-"+biomeType;
+        let divClass = "row mx-0 py-3 pl-3 rounded-lg " + biomeType + " border border-"+biomeType;
         if (this.props.needsMargin) divClass += " mt-2";
 
         const btnClass = "btn btn-"+biomeType;
@@ -30,10 +50,10 @@ class Biome extends React.Component {
 
         return (
             <div className={divClass}>
-                <div className="col-11">
+                <div className="col-11 vert-center">
                     <h4>{biomeName}</h4>
                 </div>
-                <div className="col right-align">
+                <div className="col right-align vert-center">
                     <button className={btnClass} onClick={this.props.delete}><i className="fas fa-times"></i></button>
                 </div>
             </div>
