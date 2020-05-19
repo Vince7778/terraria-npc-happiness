@@ -1,3 +1,11 @@
+.right-align {
+    text-align: end;
+}
+
+.vert-center {
+    vertical-align: middle;
+}
+
 .hallow,
 .btn-hallow,
 .btn-hallow:hover,

@@ -24,11 +24,18 @@ class Biome extends React.Component {
         let divClass = "row mx-0 p-3 rounded-lg " + biomeType + " border border-"+biomeType;
         if (this.props.needsMargin) divClass += " mt-2";
 
+        const btnClass = "btn btn-"+biomeType;
+
         const biomeName = biomeProp.name;
 
         return (
-            <div class={divClass}>
-                <h4>{biomeName}</h4>
+            <div className={divClass}>
+                <div className="col-11">
+                    <h4>{biomeName}</h4>
+                </div>
+                <div className="col right-align">
+                    <button className={btnClass} onClick={this.props.delete}><i className="fas fa-times"></i></button>
+                </div>
             </div>
         );
     }
@@ -37,14 +44,16 @@ class Biome extends React.Component {
 class Tool extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { biomes: [] }
+        this.state = { biomes: [], idInd: 0 }
         this.addBiome = this.addBiome.bind(this);
     }
 
     addBiome(type) {
         const biomes = this.state.biomes;
+        const id = this.state.idInd;
         const biomesConcat = biomes.concat({
             type: type,
+            id: id,
         });
 
         biomesConcat.sort((a, b) => {
@@ -53,7 +62,23 @@ class Tool extends React.Component {
 
         this.setState({
             biomes: biomesConcat,
+            idInd: id+1,
         });
+    }
+
+    deleteBiome(id) {
+        const biomes = this.state.biomes.slice();
+        let biomeInd;
+        biomes.forEach((biome, ind) => {
+            if (id == biome.id) {
+                biomeInd = ind;
+            }
+        });
+        biomes.splice(biomeInd, 1);
+        this.setState({
+            biomes: biomes,
+            id: this.state.id,
+        })
     }
 
     render() {
@@ -61,12 +86,12 @@ class Tool extends React.Component {
         const biomeList = biomeState.map((biome, ind) => {
             const needsMargin = ind >= 1;
             return (
-                <Biome biomeType={biome.type} needsMargin={needsMargin}/>
+                <Biome key={biome.id} biomeType={biome.type} needsMargin={needsMargin} delete={() => this.deleteBiome(biome.id)}/>
             )
         });
 
         return (
-            <div class="col m-3 p-2 border rounded-lg">{biomeList}</div>
+            <div className="col m-3 p-2 border rounded-lg">{biomeList}</div>
         );
     }
 }
