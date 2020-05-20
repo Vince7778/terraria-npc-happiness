@@ -7,6 +7,7 @@ class Preference extends React.Component {
         const type = this.props.type;
         let divClass = "col-auto rounded-lg h-100 p-2 wrap text-center text-"+scheme.text+" bg-"+scheme.bg;
         if (this.props.index === 0) divClass += " ml-auto";
+        else divClass += " ml-2";
 
         let text;
         if (type === "biome") {
@@ -75,25 +76,68 @@ class NPC extends React.Component {
 }
 
 class Biome extends React.Component {
-    findPrefs(npc, ind) {
+    findPrefs(npc) {
         let prefs = [];
+
+        const prefTypes = ["loved", "liked", "disliked", "hated"];
+        const neighbors = this.props.npcs;
+        prefTypes.forEach(t => {
+            const curNPCPrefs = npcProps[npc].neighbors[t];
+            for (let i = 0; i < neighbors.length; i++) {
+                for (let j = 0; j < curNPCPrefs.length; j++) {
+                    if (neighbors[i] === curNPCPrefs[j]) {
+                        prefs.push({type: "neighbor", quality: t, npc: neighbors[i]});
+                        break;
+                    }
+                }
+            }
+        });
+
         const npcProp = npcProps[npc];
         const biomeType = this.props.biomeType;
         if (npcProp.biome.liked === biomeType) {
             if (npc === "santa") {
-                prefs.push(<Preference key={ind+" "+prefs.length} type="biome" quality="loved" index={prefs.length}/>);
+                prefs.push({type: "biome", quality: "loved"});
             } else if (npc !== "truffle") {
-                prefs.push(<Preference key={ind+" "+prefs.length} type="biome" quality="liked" index={prefs.length}/>);
+                prefs.push({type: "biome", quality: "liked"});
             }
         } else if (npcProp.biome.disliked === biomeType) {
             if (npc === "santa") {
-                prefs.push(<Preference key={ind+" "+prefs.length} type="biome" quality="hated" index={prefs.length}/>);
+                prefs.push({type: "biome", quality: "hated"});
             } else if (npc !== "truffle") {
-                prefs.push(<Preference key={ind+" "+prefs.length} type="biome" quality="disliked" index={prefs.length}/>);
+                prefs.push({type: "biome", quality: "disliked"});
             }
         }
-        // TODO: add neighbor prefs
-        return prefs;
+
+        const sortInds = {loved:0, liked:1, disliked:2, hated:3};
+        prefs.sort((a, b) => {
+            return (sortInds[a.quality] - sortInds[b.quality]);
+        });
+
+        const mappedPrefs = prefs.map((p, i) => {
+            if (p.type === "biome") {
+                return (
+                    <Preference 
+                        key={i}
+                        type="biome"
+                        quality={p.quality}
+                        index={i}
+                    />
+                );
+            } else {
+                return (
+                    <Preference 
+                        key={i}
+                        type="neighbor"
+                        quality={p.quality}
+                        npc={p.npc}
+                        index={i}
+                    />
+                );
+            }
+        });
+
+        return mappedPrefs;
     }
 
     render() {
