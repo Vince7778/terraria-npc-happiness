@@ -15,6 +15,13 @@ class Preference extends React.Component {
         } else if (type === "neighbor") {
             const neighborName = npcProps[this.props.npc].name;
             text = "Has a "+quality+"\nneighbor:\n"+neighborName;
+        } else if (type === "nearby") {
+            const count = this.props.neighborCount;
+            if (count < 2) {
+                text = "Few\nneighbors";
+            } else if (count > 2) {
+                text = "Too many\nneighbors\nx" + (count-2);
+            }
         }
 
         return (
@@ -54,9 +61,20 @@ class NPC extends React.Component {
 
         let priceMult = 1;
         prefs.forEach(p => {
-            priceMult *= prefImpacts[p.props.quality];
+            if (p.props.type !== "nearby") priceMult *= prefImpacts[p.props.quality];
+            else {
+                const neighborCount = p.props.neighborCount;
+                if (neighborCount < 2) priceMult *= 0.9;
+                else {
+                    for (let i = 3; i <= neighborCount; i++) priceMult *= 1.04;
+                }
+            }
         });
-        const priceText = "Price: "+(priceMult*100).toFixed(1)+"%";
+        priceMult = Math.round(priceMult*20)/20;
+        
+        let priceText = "Price: "+(priceMult*100).toFixed(0)+"%";
+        if (priceMult > 1.5) priceText += " (capped at 150%)";
+        else if (priceMult < 0.75) priceText += " (capped at 75%)";
 
         let priceColor;
         if (priceMult < 1) priceColor = "text-success";
@@ -125,6 +143,13 @@ class Biome extends React.Component {
             }
         }
 
+        const neighborCount = neighbors.length-1;
+        if (neighborCount > 2) {
+            prefs.push({type: "nearby", quality: "disliked"});
+        } else if (neighborCount < 2) {
+            prefs.push({type: "nearby", quality: "loved"});
+        }
+
         const sortInds = {loved:0, liked:1, disliked:2, hated:3};
         prefs.sort((a, b) => {
             return (sortInds[a.quality] - sortInds[b.quality]);
@@ -140,13 +165,23 @@ class Biome extends React.Component {
                         index={i}
                     />
                 );
-            } else {
+            } else if (p.type === "neighbor") {
                 return (
                     <Preference 
                         key={i}
                         type="neighbor"
                         quality={p.quality}
                         npc={p.npc}
+                        index={i}
+                    />
+                );
+            } else if (p.type === "nearby") {
+                return (
+                    <Preference 
+                        key={i}
+                        type="nearby"
+                        quality={p.quality}
+                        neighborCount={neighborCount}
                         index={i}
                     />
                 );
