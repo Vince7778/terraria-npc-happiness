@@ -52,6 +52,19 @@ class NPC extends React.Component {
         let closeButtonClassName = "col-auto justify-content-end right-align vert-center"
         if (prefs.length === 0) closeButtonClassName += " ml-auto";
 
+        let priceMult = 1;
+        prefs.forEach(p => {
+            priceMult *= prefImpacts[p.props.quality];
+        });
+        const priceText = "Price: "+(priceMult*100).toFixed(1)+"%";
+
+        let priceColor;
+        if (priceMult < 1) priceColor = "text-success";
+        else if (priceMult == 1) priceColor = "text-body";
+        else priceColor = "text-danger";
+
+        const textClass = "vert-center "+priceColor;
+
         return (
             <div className={className}>
                 <div className="col-auto">
@@ -65,6 +78,9 @@ class NPC extends React.Component {
                 </div>
                 <div className="col-auto">
                     <h5 className="vert-center">{npcName}</h5>
+                </div>
+                <div className="col-auto">
+                    <h5 className={textClass}>{priceText}</h5>
                 </div>
                 {prefs}
                 <div className={closeButtonClassName}>
