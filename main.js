@@ -5,7 +5,9 @@ class Preference extends React.Component {
         const scheme = qualityColors[quality];
 
         const type = this.props.type;
-        const divClass = "col-auto ml-auto rounded-lg h-100 p-2 wrap text-center text-"+scheme.text+" bg-"+scheme.bg;
+        let divClass = "col-auto rounded-lg h-100 p-2 wrap text-center text-"+scheme.text+" bg-"+scheme.bg;
+        if (this.props.index === 0) divClass += " ml-auto";
+
         let text;
         if (type === "biome") {
             text = "In a\n"+quality+" biome";
@@ -35,10 +37,19 @@ class NPC extends React.Component {
         
         const npcName = npcProps[npcType].name;
 
-        const upBtn = this.props.isFirstBiome ? null : 
-            (<button type="button" className="btn btn-outline-secondary btn-sm" onClick={this.props.moveNPCUp}><i className="fas fa-chevron-up"></i></button>);
-        const downBtn = this.props.isLastBiome ? null : 
-            (<button type="button" className="btn btn-outline-secondary btn-sm" onClick={this.props.moveNPCDown}><i className="fas fa-chevron-down"></i></button>);
+        let upBtn = null;
+        let downBtn = null;
+        if (npcType !== "truffle") {
+            if (!this.props.isFirstBiome) upBtn = 
+                (<button type="button" className="btn btn-outline-secondary btn-sm" onClick={this.props.moveNPCUp}><i className="fas fa-chevron-up"></i></button>);
+            if (!this.props.isLastBiome) downBtn =
+                (<button type="button" className="btn btn-outline-secondary btn-sm" onClick={this.props.moveNPCDown}><i className="fas fa-chevron-down"></i></button>);
+        }
+
+        const prefs = this.props.prefs;
+
+        let closeButtonClassName = "col-auto justify-content-end right-align vert-center"
+        if (prefs.length === 0) closeButtonClassName += " ml-auto";
 
         return (
             <div className={className}>
@@ -54,7 +65,8 @@ class NPC extends React.Component {
                 <div className="col-auto">
                     <h5 className="vert-center">{npcName}</h5>
                 </div>
-                <div className="col-auto justify-content-end right-align vert-center">
+                {prefs}
+                <div className={closeButtonClassName}>
                     <button className="btn blank" onClick={this.props.removeNPC}><i className="fas fa-times"></i></button>
                 </div>
             </div>
@@ -63,6 +75,27 @@ class NPC extends React.Component {
 }
 
 class Biome extends React.Component {
+    findPrefs(npc, ind) {
+        let prefs = [];
+        const npcProp = npcProps[npc];
+        const biomeType = this.props.biomeType;
+        if (npcProp.biome.liked === biomeType) {
+            if (npc === "santa") {
+                prefs.push(<Preference key={ind+" "+prefs.length} type="biome" quality="loved" index={prefs.length}/>);
+            } else if (npc !== "truffle") {
+                prefs.push(<Preference key={ind+" "+prefs.length} type="biome" quality="liked" index={prefs.length}/>);
+            }
+        } else if (npcProp.biome.disliked === biomeType) {
+            if (npc === "santa") {
+                prefs.push(<Preference key={ind+" "+prefs.length} type="biome" quality="hated" index={prefs.length}/>);
+            } else if (npc !== "truffle") {
+                prefs.push(<Preference key={ind+" "+prefs.length} type="biome" quality="disliked" index={prefs.length}/>);
+            }
+        }
+        // TODO: add neighbor prefs
+        return prefs;
+    }
+
     render() {
         const biomeType = this.props.biomeType;
         const biomeProp = biomeProps[biomeType];
@@ -75,6 +108,8 @@ class Biome extends React.Component {
         const biomeName = biomeProp.name;
 
         const npcList = this.props.npcs.map((npc, ind) => {
+            const prefs = this.findPrefs(npc);
+
             return (
                 <NPC 
                     key={ind} 
@@ -85,6 +120,7 @@ class Biome extends React.Component {
                     isLastBiome={this.props.isLast}
                     moveNPCUp={() => this.props.moveNPCUp(npc)}
                     moveNPCDown={() => this.props.moveNPCDown(npc)}
+                    prefs={prefs}
                 />
             );
         });
@@ -96,7 +132,7 @@ class Biome extends React.Component {
                         <div className="col vert-center">
                             <h4>{biomeName}</h4>
                         </div>
-                        <div className="col-auto justify-content-end right-align vert-center">
+                        <div className="col-auto ml-auto justify-content-end right-align vert-center">
                             <button className={btnClass} onClick={this.props.delete}><i className="fas fa-times"></i></button>
                         </div>
                     </div>
