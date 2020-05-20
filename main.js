@@ -20,6 +20,9 @@ class NPC extends React.Component {
                 <div className="col">
                     <h5 className="vert-center">{npcName}</h5>
                 </div>
+                <div className="col right-align vert-center">
+                    <button className="btn blank" onClick={this.props.removeNPC}><i className="fas fa-times"></i></button>
+                </div>
             </div>
         );
     }
@@ -39,7 +42,7 @@ class Biome extends React.Component {
 
         const npcList = this.props.npcs.map((npc, ind) => {
             return (
-                <NPC key={ind} npcType={npc} ind={ind} />
+                <NPC key={ind} npcType={npc} ind={ind} removeNPC={() => {this.props.removeNPC(npc)}}/>
             );
         });
 
@@ -95,7 +98,18 @@ class Tool extends React.Component {
                 biomeInd = ind;
             }
         });
-        biomes.splice(biomeInd, 1);
+        const removed = biomes.splice(biomeInd, 1);
+
+        removed[0].npcs.forEach(type => {
+            const dropdown = document.getElementById("npcDropdownMenu");
+            const children = dropdown.children;
+            for (let i = 0; i < children.length; i++) {
+                if (children[i].innerHTML === npcProps[type].name) {
+                    children[i].className = "dropdown-item";
+                }
+            }
+        });
+
         this.setState({
             biomes: biomes,
             id: this.state.id,
@@ -106,6 +120,13 @@ class Tool extends React.Component {
     addNPC(type) {
         const biomes = this.state.biomes.slice();
         if (biomes.length > 0) {
+            for (let i = 0; i < biomes.length; i++) {
+                if (biomes[i].npcs.includes(type)) {
+                    console.error("Can't add NPC twice!");
+                    return;
+                }
+            }
+
             const prefType = npcProps[type].biome.liked;
             let prefInd = -1;
             for (let i = 0; i < biomes.length; i++) {
@@ -118,6 +139,14 @@ class Tool extends React.Component {
 
             biomes[prefInd].npcs.push(type);
 
+            const dropdown = document.getElementById("npcDropdownMenu");
+            const children = dropdown.children;
+            for (let i = 0; i < children.length; i++) {
+                if (children[i].innerHTML === npcProps[type].name) {
+                    children[i].className = "dropdown-item disabled";
+                }
+            }
+
             this.setState({
                 biomes: biomes,
                 idInd: this.state.idInd,
@@ -125,13 +154,45 @@ class Tool extends React.Component {
         }
     }
 
+    removeNPC(type) {
+        const biomes = this.state.biomes.slice();
+        for (let i = 0; i < biomes.length; i++) {
+            const npcs = biomes[i].npcs;
+            for (let j = npcs.length-1; j >= 0; j--) {
+                if (npcs[j] === type) {
+                    npcs.splice(j, 1);
+                }
+            }
+        }
+
+        const dropdown = document.getElementById("npcDropdownMenu");
+        const children = dropdown.children;
+        for (let i = 0; i < children.length; i++) {
+            if (children[i].innerHTML === npcProps[type].name) {
+                children[i].className = "dropdown-item";
+            }
+        }
+
+        this.setState({
+            biomes: biomes,
+            idInd: this.state.idInd,
+        });
+    }
+
     render() {
         const biomeState = this.state.biomes;
         const biomeList = biomeState.map((biome, ind) => {
             const needsMargin = ind >= 1;
             return (
-                <Biome key={biome.id} biomeType={biome.type} needsMargin={needsMargin} delete={() => this.deleteBiome(biome.id)} npcs={biome.npcs}/>
-            )
+                <Biome
+                    key={biome.id} 
+                    biomeType={biome.type} 
+                    needsMargin={needsMargin} 
+                    delete={() => this.deleteBiome(biome.id)} 
+                    npcs={biome.npcs} 
+                    removeNPC={type => this.removeNPC(type)}
+                />
+            );
         });
 
         return (
@@ -163,12 +224,10 @@ const npcDropdown = document.getElementById("npcDropdownMenu");
 npcList.forEach(npcName => {
     const npcProp = npcProps[npcName];
 
-    const className = "dropdown-item btn-"+npcName;
-
     const elem = document.createElement("button");
     elem.innerHTML = npcProp.name;
     elem.type = "button";
-    elem.className = className;
+    elem.className = "dropdown-item";
     elem.onclick = () => {
         tool.addNPC(npcName);
     }
