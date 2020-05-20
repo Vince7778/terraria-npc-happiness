@@ -36,25 +36,81 @@ const biomeProps = {
     },
 }
 
+const npcList = ["guide", "wizard"];
+
+const npcProps = {
+    guide: {
+        name: "Guide",
+        biome: {
+            liked: "forest",
+            disliked: "ocean",
+        },
+    },
+    wizard: {
+        name: "Wizard",
+        biome: {
+            liked: "hallow",
+            disliked: "ocean",
+        },
+    },
+}
+
+class NPC extends React.Component {
+    render() {
+        const npcType = this.props.npcType;
+        const ind = this.props.ind;
+        
+        const hasMargin = ind >= 1;
+        let className = "row align-items-center mx-0 p-2 blank border border-dark rounded-lg";
+        if (hasMargin) className += " mt-1";
+
+        const imgSrc = "images/" + npcType + ".png";
+        
+        const npcName = npcProps[npcType].name;
+
+        return (
+            <div className={className}>
+                <div className="col-auto">
+                    <img src={imgSrc}></img>
+                </div>
+                <div className="col">
+                    <h5 className="vert-center">{npcName}</h5>
+                </div>
+            </div>
+        );
+    }
+}
+
 class Biome extends React.Component {
     render() {
         const biomeType = this.props.biomeType;
         const biomeProp = biomeProps[biomeType];
 
-        let divClass = "row mx-0 py-3 pl-3 rounded-lg " + biomeType + " border border-"+biomeType;
+        let divClass = "row mx-0 p-3 rounded-lg " + biomeType + " border border-"+biomeType;
         if (this.props.needsMargin) divClass += " mt-2";
 
         const btnClass = "btn btn-"+biomeType;
 
         const biomeName = biomeProp.name;
 
+        const npcList = this.props.npcs.map((npc, ind) => {
+            return (
+                <NPC key={ind} npcType={npc} ind={ind} />
+            );
+        });
+
         return (
             <div className={divClass}>
-                <div className="col-11 vert-center">
-                    <h4>{biomeName}</h4>
-                </div>
-                <div className="col right-align vert-center">
-                    <button className={btnClass} onClick={this.props.delete}><i className="fas fa-times"></i></button>
+                <div className="col">
+                    <div className="row">
+                        <div className="col vert-center">
+                            <h4>{biomeName}</h4>
+                        </div>
+                        <div className="col right-align vert-center">
+                            <button className={btnClass} onClick={this.props.delete}><i className="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    {npcList}
                 </div>
             </div>
         );
@@ -74,6 +130,7 @@ class Tool extends React.Component {
         const biomesConcat = biomes.concat({
             type: type,
             id: id,
+            npcs: [],
         });
 
         biomesConcat.sort((a, b) => {
@@ -98,7 +155,30 @@ class Tool extends React.Component {
         this.setState({
             biomes: biomes,
             id: this.state.id,
-        })
+        });
+    }
+
+    // Adds NPC to first biome
+    addNPC(type) {
+        const biomes = this.state.biomes.slice();
+        if (biomes.length > 0) {
+            const prefType = npcProps[type].biome.liked;
+            let prefInd = -1;
+            for (let i = 0; i < biomes.length; i++) {
+                if (biomes[i].type === prefType) {
+                    prefInd = i;
+                    break;
+                }
+            }
+            if (prefInd == -1) prefInd = 0;
+
+            biomes[prefInd].npcs.push(type);
+
+            this.setState({
+                biomes: biomes,
+                idInd: this.state.idInd,
+            });
+        }
     }
 
     render() {
@@ -106,7 +186,7 @@ class Tool extends React.Component {
         const biomeList = biomeState.map((biome, ind) => {
             const needsMargin = ind >= 1;
             return (
-                <Biome key={biome.id} biomeType={biome.type} needsMargin={needsMargin} delete={() => this.deleteBiome(biome.id)}/>
+                <Biome key={biome.id} biomeType={biome.type} needsMargin={needsMargin} delete={() => this.deleteBiome(biome.id)} npcs={biome.npcs}/>
             )
         });
 
@@ -135,8 +215,31 @@ biomeList.forEach(biomeName => {
     biomeDropdown.appendChild(elem);
 });
 
+const npcDropdown = document.getElementById("npcDropdownMenu");
+npcList.forEach(npcName => {
+    const npcProp = npcProps[npcName];
+
+    const className = "dropdown-item btn-"+npcName;
+
+    const elem = document.createElement("button");
+    elem.innerHTML = npcProp.name;
+    elem.type = "button";
+    elem.className = className;
+    elem.onclick = () => {
+        tool.addNPC(npcName);
+    }
+
+    npcDropdown.appendChild(elem);
+});
+
 function addAll() {
     biomeList.forEach(biomeName => {
         tool.addBiome(biomeName);
+    });
+}
+
+function addAllNPCs() {
+    npcList.forEach(npcName => {
+        tool.addNPC(npcName);
     });
 }

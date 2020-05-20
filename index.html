@@ -27,13 +27,24 @@
             </div>
         </div>
         <div class="row">
-            <div class="col md-6">
+            <div class="col-auto">
                 <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="biomeDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Add Biomes
                     </button>
                     <div class="dropdown-menu" id="biomeDropdownMenu" aria-labelledby="biomeDropdownButton">
                         <button class="dropdown-item" type="button" onclick="addAll()">Add one of each</button>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="npcDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Add NPCs
+                    </button>
+                    <div class="dropdown-menu" id="npcDropdownMenu" aria-labelledby="npcDropdownButton">
+                        <button class="dropdown-item" type="button" onclick="addAllNPCs()">Add one of each</button>
                         <div class="dropdown-divider"></div>
                     </div>
                 </div>

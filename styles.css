@@ -117,3 +117,8 @@
 .border-mushroom {
     border-color: #000000 !important;
 }
+
+div .blank {
+    background-color: #FFFFFF;
+    color: #000000;
+}
