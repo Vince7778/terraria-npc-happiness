@@ -10,7 +10,7 @@ class Preference extends React.Component {
 
         let text;
         if (type === "biome") {
-            text = "In a\n"+quality+" biome";
+            text = "In a "+quality+"\nbiome";
         } else if (type === "neighbor") {
             const neighborName = npcProps[this.props.npc].name;
             text = "Has a "+quality+"\nneighbor:\n"+neighborName;

@@ -47,6 +47,12 @@ const npcProps = {
             liked: "forest",
             disliked: "ocean",
         },
+        neighbors: {
+            loved: [],
+            liked: ["clothier", "zoologist"],
+            disliked: ["steampunker"],
+            hated: ["painter"],
+        },
         order: 10,
     },
     merchant: {
@@ -54,6 +60,12 @@ const npcProps = {
         biome: {
             liked: "forest",
             disliked: "desert",
+        },
+        neighbors: {
+            loved: [],
+            liked: ["golfer", "nurse"],
+            disliked: ["taxcollector"],
+            hated: ["angler"],
         },
         order: 20,
     },
@@ -63,6 +75,12 @@ const npcProps = {
             liked: "forest",
             disliked: "desert",
         },
+        neighbors: {
+            loved: ["witchdoctor"],
+            liked: ["golfer"],
+            disliked: ["angler"],
+            hated: ["armsdealer"],
+        },
         order: 30,
     },
     golfer: {
@@ -70,6 +88,12 @@ const npcProps = {
         biome: {
             liked: "forest",
             disliked: "underground",
+        },
+        neighbors: {
+            loved: ["angler"],
+            liked: ["painter", "zoologist"],
+            disliked: ["pirate"],
+            hated: ["merchant"],
         },
         order: 40,
     },
@@ -79,6 +103,12 @@ const npcProps = {
             liked: "hallow",
             disliked: "snow",
         },
+        neighbors: {
+            loved: ["armsdealer"],
+            liked: ["wizard"],
+            disliked: ["dryad", "partygirl"],
+            hated: ["zoologist"],
+        },
         order: 50,
     },
     tavernkeep: {
@@ -86,6 +116,12 @@ const npcProps = {
         biome: {
             liked: "hallow",
             disliked: "snow",
+        },
+        neighbors: {
+            loved: ["demolitionist"],
+            liked: ["tinkerer"],
+            disliked: ["guide"],
+            hated: ["dyetrader"],
         },
         order: 60,
     },
@@ -95,6 +131,12 @@ const npcProps = {
             liked: "hallow",
             disliked: "underground",
         },
+        neighbors: {
+            loved: ["wizard"],
+            liked: ["stylist"],
+            disliked: ["merchant"],
+            hated: ["taxcollector"],
+        },
         order: 70,
     },
     wizard: {
@@ -102,6 +144,12 @@ const npcProps = {
         biome: {
             liked: "hallow",
             disliked: "ocean",
+        },
+        neighbors: {
+            loved: ["golfer"],
+            liked: ["merchant"],
+            disliked: ["witchdoctor"],
+            hated: ["cyborg"],
         },
         order: 80,
     },
@@ -111,6 +159,12 @@ const npcProps = {
             liked: "underground",
             disliked: "ocean",
         },
+        neighbors: {
+            loved: ["tavernkeep"],
+            liked: ["mechanic"],
+            disliked: ["armsdealer", "tinkerer"],
+            hated: [],
+        },
         order: 90,
     },
     tinkerer: {
@@ -118,6 +172,12 @@ const npcProps = {
         biome: {
             liked: "underground",
             disliked: "jungle",
+        },
+        neighbors: {
+            loved: ["mechanic"],
+            liked: ["dyetrader"],
+            disliked: ["clothier"],
+            hated: ["stylist"],
         },
         order: 100,
     },
@@ -127,6 +187,12 @@ const npcProps = {
             liked: "underground",
             disliked: "hallow",
         },
+        neighbors: {
+            loved: ["truffle"],
+            liked: ["taxcollector"],
+            disliked: ["nurse"],
+            hated: ["mechanic"],
+        },
         order: 110,
     },
     dyetrader: {
@@ -134,6 +200,12 @@ const npcProps = {
         biome: {
             liked: "desert",
             disliked: "forest",
+        },
+        neighbors: {
+            loved: [],
+            liked: ["armsdealer", "painter"],
+            disliked: ["steampunker"],
+            hated: ["pirate"],
         },
         order: 120,
     },
@@ -143,6 +215,12 @@ const npcProps = {
             liked: "desert",
             disliked: "snow",
         },
+        neighbors: {
+            loved: ["nurse"],
+            liked: ["steampunker"],
+            disliked: ["golfer"],
+            hated: ["demolitionist"],
+        },
         order: 130,
     },
     steampunker: {
@@ -150,6 +228,12 @@ const npcProps = {
         biome: {
             liked: "desert",
             disliked: "jungle",
+        },
+        neighbors: {
+            loved: ["cyborg"],
+            liked: ["painter"],
+            disliked: ["dryad", "wizard", "partygirl"],
+            hated: [],
         },
         order: 140,
     },
@@ -159,6 +243,12 @@ const npcProps = {
             liked: "jungle",
             disliked: "desert",
         },
+        neighbors: {
+            loved: [],
+            liked: ["witchdoctor", "truffle"],
+            disliked: ["angler", "zoologist"],
+            hated: ["golfer"],
+        },
         order: 150,
     },
     painter: {
@@ -166,6 +256,12 @@ const npcProps = {
         biome: {
             liked: "jungle",
             disliked: "forest",
+        },
+        neighbors: {
+            loved: ["dryad"],
+            liked: ["partygirl"],
+            disliked: ["truffle", "cyborg"],
+            hated: [],
         },
         order: 160,
     },
@@ -175,6 +271,12 @@ const npcProps = {
             liked: "jungle",
             disliked: "hallow",
         },
+        neighbors: {
+            loved: [],
+            liked: ["dryad", "guide"],
+            disliked: ["nurse"],
+            hated: ["truffle"],
+        },
         order: 170,
     },
     stylist: {
@@ -182,6 +284,12 @@ const npcProps = {
         biome: {
             liked: "ocean",
             disliked: "snow",
+        },
+        neighbors: {
+            loved: ["dyetrader"],
+            liked: ["pirate"],
+            disliked: ["tavernkeep"],
+            hated: ["tinkerer"],
         },
         order: 180,
     },
@@ -191,6 +299,12 @@ const npcProps = {
             liked: "ocean",
             disliked: "desert",
         },
+        neighbors: {
+            loved: [],
+            liked: ["demolitionist", "partygirl", "taxcollector"],
+            disliked: [],
+            hated: ["tavernkeep"],
+        },
         order: 190,
     },
     pirate: {
@@ -198,6 +312,12 @@ const npcProps = {
         biome: {
             liked: "ocean",
             disliked: "underground",
+        },
+        neighbors: {
+            loved: ["angler"],
+            liked: ["tavernkeep"],
+            disliked: ["stylist"],
+            hated: ["guide"],
         },
         order: 200,
     },
@@ -207,6 +327,12 @@ const npcProps = {
             liked: "snow",
             disliked: "underground",
         },
+        neighbors: {
+            loved: ["tinkerer"],
+            liked: ["cyborg"],
+            disliked: ["armsdealer"],
+            hated: ["clothier"],
+        },
         order: 210,
     },
     taxcollector: {
@@ -214,6 +340,12 @@ const npcProps = {
         biome: {
             liked: "snow",
             disliked: "hallow",
+        },
+        neighbors: {
+            loved: ["merchant"],
+            liked: ["partygirl"],
+            disliked: ["demolitionist", "mechanic"],
+            hated: ["santa"],
         },
         order: 220,
     },
@@ -223,6 +355,12 @@ const npcProps = {
             liked: "snow",
             disliked: "jungle",
         },
+        neighbors: {
+            loved: [],
+            liked: ["steampunker", "pirate", "stylist"],
+            disliked: ["zoologist"],
+            hated: ["wizard"],
+        },
         order: 230,
     },
     santa: {
@@ -231,6 +369,12 @@ const npcProps = {
             liked: "snow",
             disliked: "desert", // special case: Santa has different bonuses
         },
+        neighbors: {
+            loved: [],
+            liked: [],
+            disliked: [],
+            hated: ["taxcollector"],
+        },
         order: 240,
     },
     truffle: {
@@ -238,6 +382,12 @@ const npcProps = {
         biome: {
             liked: "mushroom",
             disliked: "forest", // special case: literally can't live in non-mushroom
+        },
+        neighbors: {
+            loved: ["guide"],
+            liked: ["dryad"],
+            disliked: ["clothier"],
+            hated: ["witchdoctor"],
         },
         order: 250,
     },
