@@ -1,4 +1,27 @@
 
+class Preference extends React.Component {
+    render() {
+        const quality = this.props.quality;
+        const scheme = qualityColors[quality];
+
+        const type = this.props.type;
+        const divClass = "col-auto ml-auto rounded-lg h-100 p-2 wrap text-center text-"+scheme.text+" bg-"+scheme.bg;
+        let text;
+        if (type === "biome") {
+            text = "In a\n"+quality+" biome";
+        } else if (type === "neighbor") {
+            const neighborName = npcProps[this.props.npc].name;
+            text = "Has a "+quality+"\nneighbor:\n"+neighborName;
+        }
+
+        return (
+            <div className={divClass}>
+                <h6>{text}</h6>
+            </div>
+        );
+    }
+}
+
 class NPC extends React.Component {
     render() {
         const npcType = this.props.npcType;
@@ -28,10 +51,10 @@ class NPC extends React.Component {
                 <div className="col-auto">
                     <img src={imgSrc}></img>
                 </div>
-                <div className="col">
+                <div className="col-auto">
                     <h5 className="vert-center">{npcName}</h5>
                 </div>
-                <div className="col right-align vert-center">
+                <div className="col-auto justify-content-end right-align vert-center">
                     <button className="btn blank" onClick={this.props.removeNPC}><i className="fas fa-times"></i></button>
                 </div>
             </div>
@@ -73,7 +96,7 @@ class Biome extends React.Component {
                         <div className="col vert-center">
                             <h4>{biomeName}</h4>
                         </div>
-                        <div className="col right-align vert-center">
+                        <div className="col-auto justify-content-end right-align vert-center">
                             <button className={btnClass} onClick={this.props.delete}><i className="fas fa-times"></i></button>
                         </div>
                     </div>

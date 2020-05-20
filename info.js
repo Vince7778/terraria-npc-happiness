@@ -242,3 +242,22 @@ const npcProps = {
         order: 250,
     },
 }
+
+const qualityColors = {
+    loved: {
+        bg: "primary",
+        text: "white",
+    },
+    liked: {
+        bg: "success",
+        text: "white",
+    },
+    disliked: {
+        bg: "warning",
+        text: "body",
+    },
+    hated: {
+        bg: "danger",
+        text: "white",
+    },
+}

@@ -122,3 +122,7 @@ div .blank {
     background-color: #FFFFFF;
     color: #000000;
 }
+
+div .wrap {
+    white-space: pre-wrap;
+}
