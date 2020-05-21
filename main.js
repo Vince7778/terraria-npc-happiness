@@ -374,6 +374,11 @@ class Tool extends React.Component {
     getCookies() {
         if (typeof Cookies.get("biomes") !== 'undefined') {
             const biomes = JSON.parse(Cookies.get("biomes"));
+            biomes.forEach(b => {
+                b.npcs.forEach(n => {
+                    toggleNPCDropdown(n, true);
+                });
+            });
             this.setState({
                 biomes: biomes,
             });
