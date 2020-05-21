@@ -238,16 +238,16 @@ class Biome extends React.Component {
     }
 }
 
+// main container for all the biomes
 class Tool extends React.Component {
     constructor(props) {
         super(props);
         this.state = { biomes: [] }
-        this.addBiome = this.addBiome.bind(this);
+        setTimeout(this.getCookies.bind(this), 50); // may be a race condition?
     }
 
     addBiome(type) {
         const biomes = this.state.biomes;
-        const id = this.state.idInd;
         const biomesConcat = biomes.concat({
             type: type,
             npcs: [],
@@ -260,6 +260,7 @@ class Tool extends React.Component {
         this.setState({
             biomes: biomesConcat,
         });
+        this.setCookies();
     }
 
     deleteBiome(ind) {
@@ -273,6 +274,20 @@ class Tool extends React.Component {
         this.setState({
             biomes: biomes,
         });
+        this.setCookies();
+    }
+
+    deleteAllBiomes() {
+        const dropdown = document.getElementById("npcDropdownMenu");
+        let children = dropdown.children;
+        for (let i = 0; i < children.length; i++) {
+            children[i].className = "dropdown-item";
+        }
+
+        this.setState({
+            biomes: [],
+        });
+        this.setCookies();
     }
 
     // Adds NPC to first biome
@@ -304,6 +319,7 @@ class Tool extends React.Component {
                 biomes: biomes,
             });
         }
+        this.setCookies();
     }
 
     removeNPC(type) {
@@ -322,6 +338,7 @@ class Tool extends React.Component {
         this.setState({
             biomes: biomes,
         });
+        this.setCookies();
     }
 
     moveNPCUp(type, biomeInd) {
@@ -336,6 +353,7 @@ class Tool extends React.Component {
         this.setState({
             biomes: biomes,
         });
+        this.setCookies();
     }
 
     moveNPCDown(type, biomeInd) {
@@ -350,6 +368,20 @@ class Tool extends React.Component {
         this.setState({
             biomes: biomes,
         });
+        this.setCookies();
+    }
+
+    getCookies() {
+        if (typeof Cookies.get("biomes") !== 'undefined') {
+            const biomes = JSON.parse(Cookies.get("biomes"));
+            this.setState({
+                biomes: biomes,
+            });
+        }
+    }
+
+    setCookies() {
+        Cookies.set("biomes", JSON.stringify(this.state.biomes));
     }
 
     render() {
@@ -431,4 +463,8 @@ function toggleNPCDropdown(type, disabled) {
             if (disabled) children[i].className += " disabled";
         }
     }
+}
+
+function clearBiomes() {
+    tool.deleteAllBiomes();
 }

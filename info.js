@@ -415,6 +415,6 @@ const qualityColors = {
 const prefImpacts = {
     loved: 0.90,
     liked: 0.95,
-    disliked: 1.50, // likely a bug, will probably need to be updated in the near future
+    disliked: 1.05,
     hated: 1.10,
 }
