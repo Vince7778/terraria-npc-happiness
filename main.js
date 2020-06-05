@@ -132,7 +132,7 @@ class Biome extends React.Component {
         if (npcProp.biome.liked === biomeType) {
             if (npc === "santa") {
                 prefs.push({type: "biome", quality: "loved"});
-            } else if (npc !== "truffle") {
+            } else {
                 prefs.push({type: "biome", quality: "liked"});
             }
         } else if (npcProp.biome.disliked === biomeType) {
