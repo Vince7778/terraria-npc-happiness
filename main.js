@@ -309,7 +309,13 @@ class Tool extends React.Component {
                     break;
                 }
             }
-            if (prefInd == -1) prefInd = 0;
+            if (prefInd == -1) {
+                if (type === "truffle") { // can't add truffle to anything other than mushroom biome
+                    alert("Can't add Truffle without a mushroom biome!");
+                    return;
+                }
+                prefInd = 0;
+            }
 
             biomes[prefInd].npcs.push(type);
 
