@@ -243,7 +243,7 @@ class Tool extends React.Component {
     constructor(props) {
         super(props);
         this.state = { biomes: [] }
-        setTimeout(this.getCookies.bind(this), 50); // may be a race condition?
+        setTimeout(this.getCookies.bind(this), 50); 
     }
 
     addBiome(type) {
@@ -260,7 +260,7 @@ class Tool extends React.Component {
         this.setState({
             biomes: biomesConcat,
         });
-        this.setCookies();
+        this.setCookies(biomesConcat);
     }
 
     deleteBiome(ind) {
@@ -274,7 +274,7 @@ class Tool extends React.Component {
         this.setState({
             biomes: biomes,
         });
-        this.setCookies();
+        this.setCookies(biomes);
     }
 
     deleteAllBiomes() {
@@ -287,7 +287,7 @@ class Tool extends React.Component {
         this.setState({
             biomes: [],
         });
-        this.setCookies();
+        this.setCookies([]);
     }
 
     // Adds NPC to first biome
@@ -318,8 +318,8 @@ class Tool extends React.Component {
             this.setState({
                 biomes: biomes,
             });
+            this.setCookies(biomes);
         }
-        this.setCookies();
     }
 
     removeNPC(type) {
@@ -338,7 +338,7 @@ class Tool extends React.Component {
         this.setState({
             biomes: biomes,
         });
-        this.setCookies();
+        this.setCookies(biomes);
     }
 
     moveNPCUp(type, biomeInd) {
@@ -353,7 +353,7 @@ class Tool extends React.Component {
         this.setState({
             biomes: biomes,
         });
-        this.setCookies();
+        this.setCookies(biomes);
     }
 
     moveNPCDown(type, biomeInd) {
@@ -368,7 +368,7 @@ class Tool extends React.Component {
         this.setState({
             biomes: biomes,
         });
-        this.setCookies();
+        this.setCookies(biomes);
     }
 
     getCookies() {
@@ -386,7 +386,11 @@ class Tool extends React.Component {
     }
 
     setCookies() {
-        Cookies.set("biomes", JSON.stringify(this.state.biomes));
+        Cookies.set("biomes", JSON.stringify(this.state.biomes), {sameSite: "lax"});
+    }
+
+    setCookies(biomes) {
+        Cookies.set("biomes", JSON.stringify(biomes), {sameSite: "lax"});
     }
 
     render() {
