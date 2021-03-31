@@ -60,16 +60,22 @@ class NPC extends React.Component {
         if (prefs.length === 0) closeButtonClassName += " ml-auto";
 
         let priceMult = 1;
-        prefs.forEach(p => {
-            if (p.props.type !== "nearby") priceMult *= prefImpacts[p.props.quality];
-            else {
+        for (let i = 0; i < prefs.length; i++) {
+            let p = prefs[i];
+            if (p.props.quality === "horrendous") {
+                priceMult = 1.5;
+                break;
+            }
+            if (p.props.type !== "nearby") {
+                priceMult *= prefImpacts[p.props.quality];
+            } else {
                 const neighborCount = p.props.neighborCount;
                 if (neighborCount < 2) priceMult *= 0.9;
                 else {
                     for (let i = 3; i <= neighborCount; i++) priceMult *= 1.04;
                 }
             }
-        });
+        }
         priceMult = Math.round(priceMult*20)/20;
         
         let priceText = "Price: "+(priceMult*100).toFixed(0)+"%";
@@ -115,9 +121,22 @@ class Biome extends React.Component {
 
         const prefTypes = ["loved", "liked", "disliked", "hated"];
         const neighbors = this.props.npcs;
+        let lovedCount = 0;
         prefTypes.forEach(t => {
             const curNPCPrefs = npcProps[npc].neighbors[t];
             for (let i = 0; i < neighbors.length; i++) {
+                if (neighbors[i] === npc) continue;
+                if (npc === "princess" && t === "loved" && lovedCount < 3) {
+                    // princess loves up to 3 neighbors
+                    lovedCount++;
+                    prefs.push({type: "neighbor", quality: t, npc: neighbors[i]});
+                    continue;
+                }
+                if (t === "liked" && neighbors[i] === "princess") {
+                    // everyone likes princess
+                    prefs.push({type: "neighbor", quality: t, npc: neighbors[i]});
+                    continue;
+                }
                 for (let j = 0; j < curNPCPrefs.length; j++) {
                     if (neighbors[i] === curNPCPrefs[j]) {
                         prefs.push({type: "neighbor", quality: t, npc: neighbors[i]});
@@ -144,13 +163,18 @@ class Biome extends React.Component {
         }
 
         const neighborCount = neighbors.length-1;
-        if (neighborCount > 2) {
-            prefs.push({type: "nearby", quality: "disliked"});
-        } else if (neighborCount < 2) {
-            prefs.push({type: "nearby", quality: "loved"});
+        if (npc === "princess") {
+            if (neighborCount < 2) {
+                prefs.push({type: "nearby", quality: "horrendous"});
+            }
+        } else {
+            if (neighborCount > 2) {
+                prefs.push({type: "nearby", quality: "disliked"});
+            } else if (neighborCount < 2) {
+                prefs.push({type: "nearby", quality: "loved"});
+            }
         }
 
-        const sortInds = {loved:0, liked:1, disliked:2, hated:3};
         prefs.sort((a, b) => {
             return (sortInds[a.quality] - sortInds[b.quality]);
         });

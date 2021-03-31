@@ -38,7 +38,7 @@ const biomeProps = {
 const npcList = ["guide", "merchant", "zoologist", "golfer", "nurse", "tavernkeep", "partygirl", "wizard",
                  "demolitionist", "tinkerer", "clothier", "dyetrader", "armsdealer", "steampunker", "dryad",
                  "painter", "witchdoctor", "stylist", "angler", "pirate", "mechanic", "taxcollector",
-                 "cyborg", "santa", "truffle"];
+                 "cyborg", "santa", "truffle", "princess"];
 
 const npcProps = {
     guide: {
@@ -377,6 +377,20 @@ const npcProps = {
         },
         order: 240,
     },
+    princess: {
+        name: "Princess",
+        biome: {
+            liked: "n/a",
+            disliked: "n/a",
+        },
+        neighbors: { // special case: loves up to 3 neighbors, hates being lonely
+            loved: [],
+            liked: [],
+            disliked: [],
+            hated: [],
+        },
+        order: 245,
+    },
     truffle: {
         name: "Truffle",
         biome: {
@@ -410,6 +424,10 @@ const qualityColors = {
         bg: "danger",
         text: "white",
     },
+    horrendous: {
+        bg: "dark",
+        text: "white",
+    }
 }
 
 const prefImpacts = {
@@ -417,4 +435,13 @@ const prefImpacts = {
     liked: 0.95,
     disliked: 1.05,
     hated: 1.10,
+    horrendous: 1000.0,
+}
+
+const sortInds = {
+    loved: 0, 
+    liked: 1, 
+    disliked: 2, 
+    hated: 3,
+    horrendous: 4,
 }
